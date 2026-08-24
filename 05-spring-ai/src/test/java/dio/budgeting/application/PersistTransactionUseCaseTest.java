@@ -29,8 +29,8 @@ class PersistTransactionUseCaseTest {
         var useCase = new PersistTransactionUseCase(repository);
 
         var input = new PersistTransactionInput(
-                "Teste",
-                0,
+                null,
+                10,
                 Category.GROCERIES
         );
 
@@ -54,8 +54,8 @@ class PersistTransactionUseCaseTest {
         var useCase = new PersistTransactionUseCase(repository);
 
         var input = new PersistTransactionInput(
-                "Teste",
-                0,
+                "",
+                10,
                 Category.GROCERIES
         );
 
