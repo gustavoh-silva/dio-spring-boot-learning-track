@@ -34,7 +34,9 @@ class PersistTransactionUseCaseTest {
                 Category.GROCERIES
         );
 
-        assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+        var exception = assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+
+        assertEquals("A descrição não pode ser nula", exception.getMessage());
     }
 
     @Test
@@ -59,7 +61,9 @@ class PersistTransactionUseCaseTest {
                 Category.GROCERIES
         );
 
-        assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+        var exception = assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+
+        assertEquals("A descrição não pode estar vazia", exception.getMessage());
     }
 
     @Test
@@ -84,7 +88,9 @@ class PersistTransactionUseCaseTest {
                 Category.GROCERIES
         );
 
-        assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+        var exception = assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+
+        assertEquals("O valor da transação deve ser maior que zero.", exception.getMessage());
     }
 
     @Test
@@ -109,7 +115,9 @@ class PersistTransactionUseCaseTest {
                 Category.GROCERIES
         );
 
-        assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+        var exception = assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+
+        assertEquals("O valor da transação deve ser maior que zero.", exception.getMessage());
     }
 
     @Test
@@ -134,6 +142,8 @@ class PersistTransactionUseCaseTest {
                 null
         );
 
-        assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+        var exception = assertThrows(IllegalArgumentException.class, () -> useCase.execute(input));
+
+        assertEquals("A categoria não pode ser nula", exception.getMessage());
     }
 }
