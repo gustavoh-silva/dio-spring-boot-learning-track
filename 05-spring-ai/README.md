@@ -79,6 +79,65 @@ Run the application and tests:
 ./gradlew test
 ```
 
+## Entrega do Desafio
+
+### O que o projeto faz
+
+Esta é uma API de orçamento que recebe comandos de voz sobre transações financeiras. O áudio é transcrito, a IA identifica a intenção, executa uma ferramenta da aplicação para criar ou consultar transações e gera uma resposta em áudio.
+
+### Como executar a aplicação
+
+1. Configure a variável de ambiente `OPENAI_API_KEY` com uma chave da OpenAI.
+2. Inicie o banco de dados com Docker Compose, se ele não for iniciado automaticamente pelo Spring Boot:
+
+   ```bash
+   docker compose up -d
+   ```
+
+3. Execute a aplicação:
+
+   ```bash
+   ./gradlew bootRun
+   ```
+
+No PowerShell, configure a chave com:
+
+```powershell
+$env:OPENAI_API_KEY="sua_chave_aqui"
+```
+
+### Melhoria implementada
+
+Foi adicionada validação no fluxo de persistência de transações. Como as informações podem ser extraídas de uma fala por IA, a aplicação rejeita descrição nula ou vazia, valor zero ou negativo e categoria nula antes de salvar os dados.
+
+Os valores são armazenados em centavos e convertidos para reais na resposta da API usando `BigDecimal`, evitando imprecisões de `double` em valores monetários.
+
+### Tecnologias utilizadas
+
+- Java 21
+- Spring Boot
+- Spring AI e OpenAI
+- Spring Data JPA
+- MySQL
+- Gradle
+- JUnit 5
+
+### Como testar o fluxo principal
+
+Os testes unitários da validação não exigem chave da OpenAI nem banco de dados:
+
+```bash
+./gradlew test --tests dio.budgeting.application.PersistTransactionUseCaseTest
+```
+
+Eles verificam que uma transação inválida não é persistida quando possui descrição nula ou vazia, valor zero ou negativo, ou categoria nula.
+
+Com uma chave da OpenAI configurada, envie um arquivo de áudio para `POST /transactions/ai`. Por exemplo, um áudio com "gastei 80 reais no mercado" deve gerar uma transação com o valor `8000` em centavos, retornado como `80.00` reais.
+
+### Aprendizados
+
+Neste desafio, aprendi a integrar recursos de IA a uma aplicação Spring Boot, incluindo transcrição de áudio, Tool Calling e síntese de voz. Também pratiquei a separação entre domínio, casos de uso e infraestrutura, além da importância de validar dados produzidos por IA antes de persistir uma operação financeira.
+
 ## Notes
 
 - Educational final project focused on AI plus architectural discipline.
